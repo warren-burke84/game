@@ -9,6 +9,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
+    private Texture2D _ballTexture;
+    private Vector2 _ballPosition;
+    private Vector2 _ballVelocity;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -18,7 +22,8 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        _ballPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+        _ballVelocity = new Vector2(150, 150);
 
         base.Initialize();
     }
@@ -26,8 +31,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        _ballTexture = Content.Load<Texture2D>("ball");
     }
 
     protected override void Update(GameTime gameTime)
@@ -35,7 +39,17 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        _ballPosition += _ballVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (_ballPosition.X < 0 || _ballPosition.X + _ballTexture.Width > GraphicsDevice.Viewport.Width)
+        {
+            _ballVelocity.X *= -1;
+        }
+
+        if (_ballPosition.Y < 0 || _ballPosition.Y + _ballTexture.Height > GraphicsDevice.Viewport.Height)
+        {
+            _ballVelocity.Y *= -1;
+        }
 
         base.Update(gameTime);
     }
@@ -44,7 +58,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(_ballTexture, _ballPosition, Color.White);
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
