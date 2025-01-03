@@ -31,3 +31,14 @@ Introduction
    ```
    dotnet run
    ```
+
+## Automated Build and Package Process using GitHub Actions
+
+This repository includes a GitHub Actions workflow to automate the build and package process for the game. The workflow is defined in the `.github/workflows/build.yml` file.
+
+### Workflow Steps
+
+1. Set up .NET Core
+2. Restore dependencies
+3. Build the project
+4. Package the game
