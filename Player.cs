@@ -8,11 +8,13 @@ namespace game
     {
         private Texture2D _texture;
         private Vector2 _position;
+        private GraphicsDevice _graphicsDevice;
 
-        public Player(Texture2D texture, Vector2 initialPosition)
+        public Player(Texture2D texture, Vector2 initialPosition, GraphicsDevice graphicsDevice)
         {
             _texture = texture;
             _position = initialPosition;
+            _graphicsDevice = graphicsDevice;
         }
 
         public void HandleInput(KeyboardState keyboardState)
@@ -33,6 +35,14 @@ namespace game
             {
                 _position.Y += 5f;
             }
+
+            ClampPosition();
+        }
+
+        private void ClampPosition()
+        {
+            _position.X = MathHelper.Clamp(_position.X, 0, _graphicsDevice.Viewport.Width - _texture.Width);
+            _position.Y = MathHelper.Clamp(_position.Y, 0, _graphicsDevice.Viewport.Height - _texture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)

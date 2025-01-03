@@ -20,7 +20,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _player = new Player(null, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+        _player = new Player(null, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), GraphicsDevice);
 
         base.Initialize();
     }
@@ -29,7 +29,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Texture2D ballTexture = Content.Load<Texture2D>("ball");
-        _player = new Player(ballTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+        _player = new Player(ballTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), GraphicsDevice);
     }
 
     protected override void Update(GameTime gameTime)
