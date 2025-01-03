@@ -9,6 +9,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
+    private Vector2 _circlePosition;
+    private Vector2 _circleVelocity;
+    private float _circleRadius;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -18,7 +22,9 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        _circlePosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+        _circleVelocity = new Vector2(150f, 150f);
+        _circleRadius = 20f;
 
         base.Initialize();
     }
@@ -35,7 +41,17 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        _circlePosition += _circleVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (_circlePosition.X - _circleRadius < 0 || _circlePosition.X + _circleRadius > GraphicsDevice.Viewport.Width)
+        {
+            _circleVelocity.X *= -1;
+        }
+
+        if (_circlePosition.Y - _circleRadius < 0 || _circlePosition.Y + _circleRadius > GraphicsDevice.Viewport.Height)
+        {
+            _circleVelocity.Y *= -1;
+        }
 
         base.Update(gameTime);
     }
@@ -44,7 +60,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
+        _spriteBatch.Begin();
+        _spriteBatch.DrawCircle(_circlePosition, _circleRadius, 100, Color.Red, _circleRadius);
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
