@@ -9,9 +9,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Texture2D _ballTexture;
-    private Vector2 _ballPosition;
-    private Vector2 _ballVelocity;
+    private Player _player;
 
     public Game1()
     {
@@ -22,8 +20,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _ballPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-        _ballVelocity = new Vector2(150, 150);
+        _player = new Player(null, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
 
         base.Initialize();
     }
@@ -31,7 +28,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _ballTexture = Content.Load<Texture2D>("ball");
+        Texture2D ballTexture = Content.Load<Texture2D>("ball");
+        _player = new Player(ballTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
     }
 
     protected override void Update(GameTime gameTime)
@@ -39,17 +37,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _ballPosition += _ballVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (_ballPosition.X < 0 || _ballPosition.X + _ballTexture.Width > GraphicsDevice.Viewport.Width)
-        {
-            _ballVelocity.X *= -1;
-        }
-
-        if (_ballPosition.Y < 0 || _ballPosition.Y + _ballTexture.Height > GraphicsDevice.Viewport.Height)
-        {
-            _ballVelocity.Y *= -1;
-        }
+        _player.HandleInput(Keyboard.GetState());
 
         base.Update(gameTime);
     }
@@ -59,7 +47,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_ballTexture, _ballPosition, Color.White);
+        _player.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);
