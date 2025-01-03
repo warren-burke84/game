@@ -1,0 +1,12 @@
+{
+  "name": "dotnet8-codespace",
+  "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+  "extensions": [
+    "ms-dotnettools.csdevkit",
+    "ms-vscode.github-actions"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "postCreateCommand": "dotnet restore"
+}

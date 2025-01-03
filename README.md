@@ -42,3 +42,17 @@ This repository includes a GitHub Actions workflow to automate the build and pac
 2. Restore dependencies
 3. Build the project
 4. Package the game
+
+## Codespace Dev Container Setup and Usage
+
+This repository includes a Codespace dev container configuration for dotnet8 with the C# Dev Kit and GitHub Actions extensions.
+
+### Setup
+
+1. Open the repository in GitHub Codespaces.
+2. The dev container will be built automatically based on the configuration in the `.devcontainer/devcontainer.json` file.
+
+### Usage
+
+1. Once the dev container is built, you can start developing using the pre-configured environment.
+2. The C# Dev Kit and GitHub Actions extensions are already installed and configured.
