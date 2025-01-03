@@ -29,7 +29,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Texture2D ballTexture = Content.Load<Texture2D>("ball");
-        _player = new Player(ballTexture, _player.Position);
+        _player = new Player(ballTexture, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
     }
 
     protected override void Update(GameTime gameTime)
